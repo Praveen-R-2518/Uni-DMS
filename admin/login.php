@@ -28,15 +28,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result && ($row = $result->fetch_assoc())) {
             if (password_verify($password, $row['password_hash'])) {
+                session_regenerate_id(true);
                 $_SESSION['admin_id'] = $row['id'];
                 $_SESSION['admin_name'] = $row['fullname'];
-                set_flash('success', 'Welcome back, ' . $row['fullname']);
-                $redirect = $redirectTarget;
-                if (strpos($redirect, '://') !== false) {
+                set_flash('success', 'Welcome back, ' . htmlspecialchars($row['fullname']));
+                // Strict redirect: only allow safe relative paths with no protocol or path traversal
+                $allowed = ['dashboard.php', 'universities.php', 'degrees.php', 'activities.php'];
+                $redirect = ltrim($redirectTarget, '/');
+                if (!in_array($redirect, $allowed, true)) {
                     $redirect = 'dashboard.php';
                 }
-                $redirect = ltrim($redirect, '/');
-                header('Location: ' . ($redirect !== '' ? $redirect : 'dashboard.php'));
+                header('Location: ' . $redirect);
                 exit;
             }
         }

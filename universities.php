@@ -39,7 +39,8 @@ $stmt = $conn->prepare($query);
 $bindTypes = $paramTypes . 'ii';
 if ($stmt) {
     if ($params) {
-        $stmt->bind_param($bindTypes, ...array_merge($params, [$offset, $perPage]));
+        $allParams = array_merge($params, [$offset, $perPage]);
+        $stmt->bind_param($bindTypes, ...$allParams);
     } else {
         $stmt->bind_param('ii', $offset, $perPage);
     }
@@ -136,7 +137,7 @@ include 'includes/header.php';
                     <article class="university-card reveal-on-scroll" data-streams="<?php echo htmlspecialchars($university['stream_list']); ?>">
                         <div class="university-image">
                             <?php if ($image): ?>
-                                <img src="<?php echo $image; ?>" loading="lazy" alt="<?php echo htmlspecialchars($university['name']); ?>">
+                                <img src="<?php echo htmlspecialchars($image, ENT_QUOTES, 'UTF-8'); ?>" loading="lazy" alt="<?php echo htmlspecialchars($university['name']); ?>">
                             <?php else: ?>
                                 <div class="university-image university-image--placeholder"></div>
                             <?php endif; ?>
@@ -150,11 +151,11 @@ include 'includes/header.php';
                             <p><?php echo htmlspecialchars(getUniversityDescription($university)); ?></p>
                             <div class="pills">
                                 <span class="pill degree-pill"><?php echo $university['degree_count']; ?> Degrees</span>
-                                <?php if (!empty($university['stream_list'])): ?>
-                                    <?php foreach (explode(', ', $university['stream_list']) as $stream): ?>
-                                        <span class="pill"><?php echo htmlspecialchars($stream); ?></span>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
+                            <?php if (!empty($university['stream_list']) && $university['stream_list'] !== 'All'): ?>
+                                <?php foreach (explode(', ', $university['stream_list']) as $stream): ?>
+                                    <span class="pill"><?php echo htmlspecialchars($stream); ?></span>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                             </div>
                             <div class="program-cta">
                                 <a class="btn btn-primary" href="university.php?id=<?php echo $university['id']; ?>">View Programs →</a>
