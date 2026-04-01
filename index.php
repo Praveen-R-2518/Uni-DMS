@@ -1,6 +1,7 @@
 <?php
 // index.php - Homepage
 include 'includes/header.php';
+require_once 'includes/db.php';
 ?>
 <section class="container">
     <h1>Welcome to the University Degree Management System</h1>

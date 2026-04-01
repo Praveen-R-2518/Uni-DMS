@@ -1,7 +1,7 @@
 <?php
 // finder.php - Z-score finder page
 include 'includes/header.php';
-include 'includes/db.php';
+require_once 'includes/db.php';
 
 $degrees = [];
 $error = '';

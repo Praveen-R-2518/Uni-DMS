@@ -1,7 +1,7 @@
 <?php
 // universities.php - List all universities dynamically
 include 'includes/header.php';
-include 'includes/db.php';
+require_once 'includes/db.php';
 
 // Fetch universities from DB
 $sql = "SELECT * FROM universities";
