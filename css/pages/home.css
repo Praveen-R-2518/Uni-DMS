@@ -96,21 +96,15 @@
     background: var(--light-50);
     border: 1px solid var(--light-200);
     border-radius: var(--radius-xl);
-    padding: var(--space-10);
-    position: relative;
-    overflow: hidden;
-    transition: transform 250ms var(--ease-default), box-shadow 250ms var(--ease-default), border-color 250ms var(--ease-default);
-    min-height: 280px;
-    box-shadow: var(--shadow-light-md);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     padding: var(--space-6);
     position: relative;
     overflow: hidden;
     transition: transform 250ms var(--ease-default), box-shadow 250ms var(--ease-default), border-color 250ms var(--ease-default);
     min-height: 220px;
     box-shadow: var(--shadow-light-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .bento-card:hover {
@@ -234,35 +228,19 @@
 
 .kpi-row .kpi {
     flex: 1;
-    min-width: 140px;
-    padding: var(--space-6);
-    border-radius: var(--radius-xl);
-    background: var(--light-100);
-    border: 1px solid var(--light-200);
-    text-align: center;
-}
     min-width: 120px;
     padding: var(--space-4);
     border-radius: var(--radius-lg);
     background: var(--light-100);
     border: 1px solid var(--light-200);
     text-align: center;
+}
 
 .kpi-row .kpi strong.accent {
     color: var(--amber-500);
-}
 }
 
 .kpi h3 {
     font-size: var(--text-2xl);
     color: var(--amber-500);
-}
-
-
-@media (max-width: var(--bp-md)) {
-    .floating-navbar {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-    }
 }

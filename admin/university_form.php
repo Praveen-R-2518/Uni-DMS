@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
         } else {
             $insert = $conn->prepare('INSERT INTO universities (name, location, type, website, contact, established_year, description, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-            $insert->bind_param('sssssiss', $name, $location, $type, $website, $contact, $establishedYear, $description, $newImage);
+            $insert->bind_param('ssssssss', $name, $location, $type, $website, $contact, $establishedYear, $description, $newImage);
             if ($insert->execute()) {
                 set_flash('success', 'University added successfully.');
                 header('Location: universities.php');
@@ -125,7 +125,7 @@ include __DIR__ . '/includes/header.php';
 $heading = $universityId ? 'Edit University' : 'Add University';
 ?>
 <div class="admin-panel">
-    <h1><?php echo $heading; ?></h1>
+    <h1><?php echo htmlspecialchars($heading); ?></h1>
     <form method="POST" action="university_form.php<?php echo $universityId ? '?id=' . $universityId : ''; ?>" enctype="multipart/form-data">
         <div class="form-grid">
             <div>

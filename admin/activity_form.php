@@ -77,7 +77,7 @@ $pageTitle = $heading;
 include __DIR__ . '/includes/header.php';
 ?>
 <div class="admin-panel">
-    <h1><?php echo $heading; ?></h1>
+    <h1><?php echo htmlspecialchars($heading); ?></h1>
     <form method="POST" action="activity_form.php<?php echo $activityId ? '?id=' . $activityId : ''; ?>">
         <div class="form-grid">
             <div>

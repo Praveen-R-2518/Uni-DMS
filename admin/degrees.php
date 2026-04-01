@@ -39,9 +39,15 @@ if (!empty($_GET['university'])) {
 }
 
 if (!empty($_GET['stream'])) {
-    $filters[] = 'd.stream_requirement = ?';
-    $params[] = $_GET['stream'];
-    $types .= 's';
+    $allowedStreams = ['Maths', 'Bio', 'Commerce', 'Arts', 'Physical Science', 'Biological Science'];
+    if (in_array($_GET['stream'], $allowedStreams, true)) {
+        $filters[] = 'd.stream_requirement = ?';
+        $params[] = $_GET['stream'];
+        $types .= 's';
+    } else {
+        // silently discard invalid stream filter
+        $_GET['stream'] = '';
+    }
 }
 
 $whereClause = 'WHERE 1=1';
