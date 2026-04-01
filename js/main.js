@@ -267,5 +267,113 @@ document.addEventListener('DOMContentLoaded', App.init);
             // Switch button icon
             themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         });
+    };
+
+    const initFinderControls = () => {
+        const slider = document.getElementById('zscoreRange');
+        const sliderValue = document.getElementById('zscoreValue');
+        const sliderInput = document.getElementById('zscoreInput');
+        const resetSlider = document.querySelector('[data-reset-slider]');
+        const streamTiles = Array.from(document.querySelectorAll('.stream-tile'));
+        const streamInput = document.getElementById('streamInput');
+
+        const updateSliderDisplay = (value) => {
+            if (sliderValue) {
+                sliderValue.textContent = value;
+            }
+            if (sliderInput) {
+                sliderInput.value = value;
+            }
+        };
+
+        slider?.addEventListener('input', (event) => {
+            updateSliderDisplay(event.target.value);
+        });
+
+        resetSlider?.addEventListener('click', () => {
+            const defaultValue = 3.0;
+            if (slider) {
+                slider.value = defaultValue;
+            }
+            updateSliderDisplay(defaultValue.toFixed(3));
+        });
+
+        streamTiles.forEach((tile) => {
+            tile.addEventListener('click', () => {
+                const value = tile.dataset.value;
+                streamTiles.forEach((item) => item.classList.remove('is-active'));
+                tile.classList.add('is-active');
+                tile.setAttribute('aria-pressed', 'true');
+                streamTiles.forEach((item) => {
+                    if (item !== tile) {
+                        item.setAttribute('aria-pressed', 'false');
+                    }
+                });
+                if (streamInput) {
+                    streamInput.value = value;
+                }
+            });
+        });
+    };
+
+    const initSearchPlaceholder = () => {
+        const input = document.getElementById('searchInput');
+        if (!input) return;
+        const options = [
+            "Search 'Computer Science'...",
+            "Search 'Medicine'...",
+            "Search 'Engineering'...",
+            "Search 'Business'...",
+        ];
+        let index = 0;
+
+        const cycle = () => {
+            if (prefersReducedMotion) return;
+            input.classList.add('placeholder-fade');
+            setTimeout(() => {
+                index = (index + 1) % options.length;
+                input.placeholder = options[index];
+                input.classList.remove('placeholder-fade');
+            }, 220);
+        };
+
+        input.placeholder = options[index];
+        setInterval(cycle, 2500);
+    };
+
+    return { init };
+})();
+
+document.addEventListener('DOMContentLoaded', App.init);
+    }
+});
+
+    // --- Dark Mode Logic ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (themeToggle) {
+        // Set the initial theme based on local storage or system preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '🌙';
+        }
+
+        // Toggle button click listener
+        themeToggle.addEventListener('click', function() {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Switch button icon
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
     }
 });
