@@ -56,6 +56,9 @@
     --page-padding: clamp(24px, 8vw, 64px);
     --page-max-width: 1400px;
     --bento-gap: 32px;
+    --page-padding: clamp(16px, 5vw, 48px);
+    --page-max-width: 1200px;
+    --bento-gap: 16px;
 
     /* Border Radius */
     --radius-xs: 4px;
@@ -64,6 +67,8 @@
     --radius-lg: 16px;
     --radius-xl: 32px;
     --radius-2xl: 48px;
+    --radius-xl: 24px;
+    --radius-2xl: 32px;
     --radius-full: 9999px;
 
     /* Shadows */
